@@ -51,12 +51,16 @@ func (t *Timer) TimeMins() int {
 func (t *Timer) Run() {
 	defer t.markAsStopped()
 
+	log.Info(fmt.Sprintf("timer %d is set", t.timeMins))
+
 	ticker := time.NewTicker(1 * time.Second)
 	secondsLeft := uint64(60 * t.timeMins)
 
 	for {
 		select {
 		case <-t.stopCh:
+			log.Info(fmt.Sprintf("timer %d has stopped", t.timeMins))
+
 			return
 		case <-ticker.C:
 			if t.config.IsEnableDebugLogs {
@@ -67,6 +71,8 @@ func (t *Timer) Run() {
 				if err := t.sender.SendMessage(t.chatId, t.notice); err != nil {
 					log.Fatal("could not respond", err)
 				}
+
+				log.Info(fmt.Sprintf("timer %d has finished running", t.timeMins))
 
 				return
 			}

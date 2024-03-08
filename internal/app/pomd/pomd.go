@@ -1,6 +1,7 @@
 package pomd
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/mrumyantsev/logx"
@@ -37,6 +38,9 @@ func New() *App {
 
 func (a *App) Run() {
 	log.Info("service started")
+
+	log.Info(fmt.Sprintf("using %d-second(s) update check period",
+		a.config.UpdatesCheckPeriodSecs))
 
 	var (
 		events []eventprocessor.Event
