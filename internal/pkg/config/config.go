@@ -11,7 +11,7 @@ type Config struct {
 
 	BotToken               string `envconfig:"POM_BOT_TOKEN" default:""`
 	UpdatesProcessLimit    int    `envconfig:"UPDATES_PROCESS_LIMIT" default:"15"`
-	UpdatesCheckPeriodSecs int    `envconfig:"UPDATES_CHECK_PERIOD_SECS" default:"2"`
+	UpdatesCheckPeriodSecs int    `envconfig:"UPDATES_CHECK_PERIOD_SECS" default:"3"`
 	RequestRetryAttempts   int    `envconfig:"REQUEST_RETRY_ATTEMPTS" default:"3"`
 	ResponseRetryAttempts  int    `envconfig:"RESPONSE_RETRY_ATTEMPTS" default:"3"`
 
