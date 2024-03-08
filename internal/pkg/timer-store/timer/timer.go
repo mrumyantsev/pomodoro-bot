@@ -40,16 +40,17 @@ func New(
 	return t
 }
 
-func (t *Timer) IsStopped() bool {
-	return t.isStopped
-}
-
 func (t *Timer) TimeMins() int {
 	return t.timeMins
 }
 
+func (t *Timer) IsStopped() bool {
+	return t.isStopped
+}
+
 func (t *Timer) Run() {
-	defer t.markAsStopped()
+	t.isStopped = false
+	defer func() { t.isStopped = true }()
 
 	log.Info(fmt.Sprintf("timer %d is set", t.timeMins))
 
@@ -64,15 +65,15 @@ func (t *Timer) Run() {
 			return
 		case <-ticker.C:
 			if t.config.IsEnableDebugLogs {
-				log.Debug(fmt.Sprint("tick ", t.timeMins, secondsLeft))
+				log.Debug(fmt.Sprintf("timer %d ticks left: %d", t.timeMins, secondsLeft))
 			}
 
 			if secondsLeft == 0 {
-				if err := t.sender.SendMessage(t.chatId, t.notice); err != nil {
-					log.Fatal("could not respond", err)
-				}
-
 				log.Info(fmt.Sprintf("timer %d has finished running", t.timeMins))
+
+				if err := t.sender.SendMessage(t.chatId, t.notice); err != nil {
+					log.Fatal("could not send timer finish notice", err)
+				}
 
 				return
 			}
@@ -84,12 +85,4 @@ func (t *Timer) Run() {
 
 func (t *Timer) Stop() {
 	t.stopCh <- 0
-}
-
-func (t *Timer) markAsStopped() {
-	t.isStopped = true
-
-	if t.config.IsEnableDebugLogs {
-		log.Debug(fmt.Sprint("stopped ", t.timeMins))
-	}
 }
