@@ -142,16 +142,18 @@ func (t *TimerStore) RemoveStopped() {
 }
 
 func (t *TimerStore) removeStoppedBySchedule() {
-	log.Info("timer autoremover initiated")
+	log.Info("timerstore autoremover initiated")
 
 	for {
-		log.Debug("automatic removing of stopped timers started")
-
 		time.Sleep(
 			time.Duration(t.config.RemoveStoppedTimersPeriodSecs) *
 				time.Minute,
 		)
 
+		log.Debug("stopped timers removing is runned")
+
 		t.RemoveStopped()
+
+		log.Debug("stopped timers removing is holded")
 	}
 }
