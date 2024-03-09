@@ -69,7 +69,7 @@ func (t *Timer) Run() {
 			}
 
 			if secondsLeft == 0 {
-				log.Info(fmt.Sprintf("timer %d has finished running", t.timeMins))
+				log.Info(fmt.Sprintf("timer %d has finished", t.timeMins))
 
 				if err := t.sender.SendMessage(t.chatId, t.notice); err != nil {
 					log.Fatal("could not send timer finish notice", err)
