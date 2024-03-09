@@ -176,13 +176,13 @@ func mustCmd(text string) Event {
 }
 
 func mustSetCmd(text string) Event {
-	if len(text) < 3 {
+	if len(text) < 4 {
 		return newCmd(Undefined)
 	}
 
 	words := strings.Split(text, " ")
 
-	if !strings.EqualFold(words[0], "set") {
+	if words[0] != "/set" {
 		return newCmd(Undefined)
 	}
 
@@ -207,13 +207,13 @@ func mustSetCmd(text string) Event {
 }
 
 func mustUnsetCmd(text string) Event {
-	if len(text) < 5 {
+	if len(text) < 6 {
 		return newCmd(Undefined)
 	}
 
 	words := strings.Split(text, " ")
 
-	if !strings.EqualFold(words[0], "unset") {
+	if words[0] != "/unset" {
 		return newCmd(Undefined)
 	}
 
