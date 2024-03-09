@@ -36,7 +36,7 @@ func New(
 	}
 
 	if cfg.RemoveStoppedTimersPeriodSecs > 0 {
-		go ts.removeStoppedBySchedule()
+		go ts.autoremover()
 	}
 
 	return ts
@@ -141,7 +141,8 @@ func (t *TimerStore) RemoveStopped() {
 	}
 }
 
-func (t *TimerStore) removeStoppedBySchedule() {
+// autoremover removes stopped timers on schedule.
+func (t *TimerStore) autoremover() {
 	log.Info("timerstore autoremover initiated")
 
 	for {
