@@ -18,7 +18,7 @@
 
 * Клиент для [Telegram](https://en.wikipedia.org/wiki/Telegram_(software))
 
-# Требования
+# Технические требования
 
 ### Установленное ПО:
 
